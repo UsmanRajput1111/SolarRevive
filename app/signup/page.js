@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
+// ⭐ Added Heroicons
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+
 export default function SignupPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,12 +19,15 @@ export default function SignupPage() {
     expertise: "",
   });
 
+  // ⭐ Added states for toggling password visibility
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Custom logic for phone number
     if (name === "phone") {
       let formattedValue = value.startsWith("+92") ? value : "+92";
       formattedValue = "+92" + formattedValue.slice(3).replace(/\D/g, "");
@@ -42,9 +48,7 @@ export default function SignupPage() {
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
 
     if (!phoneRegex.test(formData.phone)) {
-      toast.error(
-        "Phone number must start with +92 and contain exactly 10 digits after it."
-      );
+      toast.error("Phone must start with +92 and contain 10 digits after it.");
       return;
     }
 
@@ -66,11 +70,10 @@ export default function SignupPage() {
     }
 
     const loadingToast = toast.loading("Creating account...");
+
     try {
       await axios.post("/api/auth/signup", formData);
-      toast.success("Account created successfully! Please login.", {
-        id: loadingToast,
-      });
+      toast.success("Account created! Please login.", { id: loadingToast });
       router.push("/login");
     } catch (error) {
       toast.error(error.response?.data?.message || "Signup failed", {
@@ -82,12 +85,14 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
       <Toaster />
+
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">
           Create Your Account
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+
           {/* Full Name */}
           <div>
             <label className="block text-gray-700">Full Name</label>
@@ -112,22 +117,18 @@ export default function SignupPage() {
             />
           </div>
 
-          {/* Phone Number with Flag and +92 */}
+          {/* Phone */}
           <div>
             <label className="block text-gray-700">Phone Number</label>
             <div className="flex items-center border rounded-lg overflow-hidden">
               <div className="flex items-center bg-gray-100 px-3">
-                <img
-                  src="/pk-flag.png" // 🟢 replace this with your actual flag image path
-                  alt="Pakistan Flag"
-                  className="w-5 h-5 mr-2"
-                />
+                <img src="/pk-flag.png" alt="Pakistan Flag" className="w-5 h-5 mr-2"/>
                 <span className="text-gray-700 font-medium">+92</span>
               </div>
               <input
                 type="tel"
                 name="phone"
-                value={formData.phone.slice(3)} // only digits shown
+                value={formData.phone.slice(3)}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -141,28 +142,56 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Password */}
+          {/* ⭐ Password with Eye Icon */}
           <div>
             <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg"
+                required
+              />
+
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2 cursor-pointer text-gray-600"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-6" />
+                ) : (
+                  <EyeIcon className="h-6 w-6" />
+                )}
+              </span>
+            </div>
           </div>
 
-          {/* Confirm Password */}
+          {/* ⭐ Confirm Password with Eye Icon */}
           <div>
             <label className="block text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg"
+                required
+              />
+
+              <span
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-2 cursor-pointer text-gray-600"
+              >
+                {showConfirmPassword ? (
+                  <EyeSlashIcon className="h-6 w-6" />
+                ) : (
+                  <EyeIcon className="h-6 w-6" />
+                )}
+              </span>
+            </div>
           </div>
 
           {/* Role */}
@@ -181,7 +210,7 @@ export default function SignupPage() {
 
           {/* Technician Expertise */}
           {formData.role === "technician" && (
-            <div className="transition-all duration-300">
+            <div>
               <label className="block text-gray-700">Select Expertise:</label>
               <select
                 name="expertise"
@@ -190,19 +219,15 @@ export default function SignupPage() {
                 className="w-full px-3 py-2 border rounded-lg"
                 required
               >
-                <option value="" disabled>
-                  Choose a category
-                </option>
+                <option value="" disabled>Choose a category</option>
                 <option value="Solar Panel Cleaning">Solar Panel Cleaning</option>
-                <option value="Solar Panel Installation">
-                  Solar Panel Installation
-                </option>
+                <option value="Solar Panel Installation">Solar Panel Installation</option>
                 <option value="Solar Foundation">Solar Foundation</option>
               </select>
             </div>
           )}
 
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all"
@@ -213,9 +238,7 @@ export default function SignupPage() {
 
         <p className="text-center mt-4">
           Already have an account?{" "}
-          <Link href="/login" className="text-blue-500">
-            Login
-          </Link>
+          <Link href="/login" className="text-blue-500">Login</Link>
         </p>
       </div>
     </div>
