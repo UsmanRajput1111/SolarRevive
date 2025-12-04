@@ -40,7 +40,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <Toaster />
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Customer Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">CustomeR Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700">Email/Phone Number</label>
