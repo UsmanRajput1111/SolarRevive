@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
-// ⭐ Added Heroicons
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 export default function SignupPage() {
@@ -19,7 +18,7 @@ export default function SignupPage() {
     expertise: "",
   });
 
-  // ⭐ Added states for toggling password visibility
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
