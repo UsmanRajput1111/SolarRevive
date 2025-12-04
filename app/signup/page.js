@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,9 @@ export default function SignupPage() {
     role: "customer",
     expertise: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const router = useRouter();
 
@@ -66,6 +70,7 @@ export default function SignupPage() {
     }
 
     const loadingToast = toast.loading("Creating account...");
+
     try {
       await axios.post("/api/auth/signup", formData);
       toast.success("Account created successfully! Please login.", {
@@ -82,6 +87,7 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
       <Toaster />
+
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">
           Create Your Account
@@ -115,23 +121,27 @@ export default function SignupPage() {
           {/* Phone Number with Flag and +92 */}
           <div>
             <label className="block text-gray-700">Phone Number</label>
+
             <div className="flex items-center border rounded-lg overflow-hidden">
               <div className="flex items-center bg-gray-100 px-3">
                 <img
-                  src="/pk-flag.png" // 🟢 replace this with your actual flag image path
+                  src="/pk-flag.png"
                   alt="Pakistan Flag"
                   className="w-5 h-5 mr-2"
                 />
                 <span className="text-gray-700 font-medium">+92</span>
               </div>
+
               <input
                 type="tel"
                 name="phone"
-                value={formData.phone.slice(3)} // only digits shown
+                value={formData.phone.slice(3)}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    phone: "+92" + e.target.value.replace(/\D/g, "").slice(0, 10),
+                    phone:
+                      "+92" +
+                      e.target.value.replace(/\D/g, "").slice(0, 10),
                   }))
                 }
                 className="flex-1 px-3 py-2 outline-none"
@@ -144,25 +154,53 @@ export default function SignupPage() {
           {/* Password */}
           <div>
             <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg"
+                required
+              />
+
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2 cursor-pointer text-gray-600"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="h-6 w-6" />
+                ) : (
+                  <EyeIcon className="h-6 w-6" />
+                )}
+              </span>
+            </div>
           </div>
 
           {/* Confirm Password */}
           <div>
             <label className="block text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg"
-              required
-            />
+
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg"
+                required
+              />
+
+              <span
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-2 cursor-pointer text-gray-600"
+              >
+                {showConfirmPassword ? (
+                  <EyeSlashIcon className="h-6 w-6" />
+                ) : (
+                  <EyeIcon className="h-6 w-6" />
+                )}
+              </span>
+            </div>
           </div>
 
           {/* Role */}
@@ -193,7 +231,9 @@ export default function SignupPage() {
                 <option value="" disabled>
                   Choose a category
                 </option>
-                <option value="Solar Panel Cleaning">Solar Panel Cleaning</option>
+                <option value="Solar Panel Cleaning">
+                  Solar Panel Cleaning
+                </option>
                 <option value="Solar Panel Installation">
                   Solar Panel Installation
                 </option>
