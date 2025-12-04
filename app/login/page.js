@@ -53,22 +53,27 @@ export default function LoginPage() {
               required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border rounded-lg"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-           <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2 cursor-pointer text-gray-600 text-xl"
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </span>
-          </div>
+         <div className="mb-6">
+  <label className="block text-gray-700">Password</label>
+
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      className="w-full px-3 py-2 border rounded-lg"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+
+    <span
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-2 cursor-pointer text-gray-600 text-xl"
+    >
+      {showPassword ? "🙈" : "👁️"}
+    </span>
+  </div>
+</div>
+
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Login
           </button>
