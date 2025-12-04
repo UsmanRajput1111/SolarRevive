@@ -61,13 +61,6 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-                {/* Eye Icon */}
-    <span
-      onClick={() => setShowPassword(!showPassword)}
-      className="absolute right-3 top-2 cursor-pointer text-gray-600"
-    >
-      {showPassword ? "🙈" : "👁️"}
-    </span>
           </div>
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Login
