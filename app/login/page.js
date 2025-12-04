@@ -8,6 +8,7 @@ import toast, { Toaster } from 'react-hot-toast';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -61,6 +62,12 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+           <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-2 cursor-pointer text-gray-600 text-xl"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </span>
           </div>
           <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
             Login
