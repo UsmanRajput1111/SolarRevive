@@ -4,7 +4,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -16,8 +15,6 @@ export default function SignupPage() {
     role: "customer",
     expertise: "",
   });
-const [showPassword, setShowPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const router = useRouter();
 
@@ -69,7 +66,6 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     }
 
     const loadingToast = toast.loading("Creating account...");
-
     try {
       await axios.post("/api/auth/signup", formData);
       toast.success("Account created successfully! Please login.", {
@@ -86,7 +82,6 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
       <Toaster />
-
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">
           Create Your Account
@@ -120,7 +115,6 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
           {/* Phone Number with Flag and +92 */}
           <div>
             <label className="block text-gray-700">Phone Number</label>
-
             <div className="flex items-center border rounded-lg overflow-hidden">
               <div className="flex items-center bg-gray-100 px-3">
                 <img
@@ -130,7 +124,6 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 />
                 <span className="text-gray-700 font-medium">+92</span>
               </div>
-
               <input
                 type="tel"
                 name="phone"
@@ -138,9 +131,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
-                    phone:
-                      "+92" +
-                      e.target.value.replace(/\D/g, "").slice(0, 10),
+                    phone: "+92" + e.target.value.replace(/\D/g, "").slice(0, 10),
                   }))
                 }
                 className="flex-1 px-3 py-2 outline-none"
@@ -150,58 +141,29 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
             </div>
           </div>
 
-        {/* Password */}
-<div>
-  <label className="block text-gray-700">Password</label>
+          {/* Password */}
+          <div>
+            <label className="block text-gray-700">Password</label>
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg"
+              required
+            />
+          </div>
 
-  <div className="relative">
-    <input
-      type={showPassword ? "text" : "password"}
-      name="password"
-      onChange={handleChange}
-      className="w-full px-3 py-2 border rounded-lg"
-      required
-    />
-
-    <span
-      onClick={() => setShowPassword(!showPassword)}
-      className="absolute right-3 top-2 cursor-pointer text-gray-600"
-    >
-      {showPassword ? (
-        <EyeSlashIcon className="h-6 w-6" />
-      ) : (
-        <EyeIcon className="h-6 w-6" />
-      )}
-    </span>
-  </div>
-</div>
-
-{/* Confirm Password */}
-<div>
-  <label className="block text-gray-700">Confirm Password</label>
-
-  <div className="relative">
-    <input
-      type={showConfirmPassword ? "text" : "password"}
-      name="confirmPassword"
-      onChange={handleChange}
-      className="w-full px-3 py-2 border rounded-lg"
-      required
-    />
-
-    <span
-      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-      className="absolute right-3 top-2 cursor-pointer text-gray-600"
-    >
-      {showConfirmPassword ? (
-        <EyeSlashIcon className="h-6 w-6" />
-      ) : (
-        <EyeIcon className="h-6 w-6" />
-      )}
-    </span>
-  </div>
-</div>
-
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-gray-700">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg"
+              required
+            />
+          </div>
 
           {/* Role */}
           <div>
@@ -231,9 +193,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 <option value="" disabled>
                   Choose a category
                 </option>
-                <option value="Solar Panel Cleaning">
-                  Solar Panel Cleaning
-                </option>
+                <option value="Solar Panel Cleaning">Solar Panel Cleaning</option>
                 <option value="Solar Panel Installation">
                   Solar Panel Installation
                 </option>
