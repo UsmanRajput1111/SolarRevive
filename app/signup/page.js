@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ export default function SignupPage() {
     role: "customer",
     expertise: "",
   });
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const router = useRouter();
 
@@ -147,29 +150,58 @@ export default function SignupPage() {
             </div>
           </div>
 
-          {/* Password */}
-          <div>
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg"
-              required
-            />
-          </div>
+        {/* Password */}
+<div>
+  <label className="block text-gray-700">Password</label>
 
-          {/* Confirm Password */}
-          <div>
-            <label className="block text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg"
-              required
-            />
-          </div>
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      name="password"
+      onChange={handleChange}
+      className="w-full px-3 py-2 border rounded-lg"
+      required
+    />
+
+    <span
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-2 cursor-pointer text-gray-600"
+    >
+      {showPassword ? (
+        <EyeSlashIcon className="h-6 w-6" />
+      ) : (
+        <EyeIcon className="h-6 w-6" />
+      )}
+    </span>
+  </div>
+</div>
+
+{/* Confirm Password */}
+<div>
+  <label className="block text-gray-700">Confirm Password</label>
+
+  <div className="relative">
+    <input
+      type={showConfirmPassword ? "text" : "password"}
+      name="confirmPassword"
+      onChange={handleChange}
+      className="w-full px-3 py-2 border rounded-lg"
+      required
+    />
+
+    <span
+      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+      className="absolute right-3 top-2 cursor-pointer text-gray-600"
+    >
+      {showConfirmPassword ? (
+        <EyeSlashIcon className="h-6 w-6" />
+      ) : (
+        <EyeIcon className="h-6 w-6" />
+      )}
+    </span>
+  </div>
+</div>
+
 
           {/* Role */}
           <div>
