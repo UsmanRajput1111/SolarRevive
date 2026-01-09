@@ -93,7 +93,7 @@ export default function CalculatorPage() {
                                     <h4 className="font-semibold text-slate-700 mb-2">Our Trusted Partners</h4>
                                     <div className="space-y-2">
                                         <Link href="https://sunsolar.pk/shop/solar-panels/" target="_blank" className="flex items-center text-indigo-600 hover:underline">
-                                            Visit Kit Solaire Discount <ExternalLink className="ml-2 h-4 w-4" />
+                                            SUNSOLAR <ExternalLink className="ml-2 h-4 w-4" />
                                         </Link>
                                         <Link href="https://solar.osakalighting.com/lahore-landing-page" target="_blank" className="flex items-center text-indigo-600 hover:underline">
                                             Search on solar.osakalighting <ExternalLink className="ml-2 h-4 w-4" />
